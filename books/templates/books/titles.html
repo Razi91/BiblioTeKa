@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block page-category %}books{% endblock %}
+{% block content %}
+
+    <table class="table">
+    <thead>
+        <tr>
+            <th>Tytuł</th>
+            <th>Autor</th>
+{#            <th title="rok pierwszego wydania">Rok wydania</th>#}
+            <th>Gatunek</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+            <tr>
+            <td>{{ book.title }}</td>
+            <td>{% for author in book.author.all %}
+                <a>{{ author.name }}</a>
+                {% if not forloop.last %}, {% endif %}{% endfor %}</td>
+            <td>
+                {% for genre in book.genre.all %}{{ genre.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+            </td>
+            <td>
+                {% if book.free_entities %}
+                <a class="btn btn-primary">Wypożycz</a>
+                {% elif book.free_entities %}
+                <a class="btn btn-primary">Rezerwuj</a>
+                {% else %}
+                <a class="btn btn-default disabled">Brak sztuk</a>
+                {% endif %}
+            </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+
+{% endblock %}

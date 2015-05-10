@@ -1,0 +1,10 @@
+
+body {
+    background-color: #fff;
+}
+
+header #strip{
+    background: url('http://lorempixel.com/g/1920/400/abstract') center;
+    height: 200px;
+    text-shadow: white 0 0 15px, white 0 0 15px;
+}

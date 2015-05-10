@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>BiblioTeKA</title>
+    <script src="{% static 'jquery-2.1.3.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/vendor/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/flat-ui.min.css' %}">
+    <script src="{% static 'bootstrap/js/flat-ui.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+    <script>
+        $(function(){
+            var page = "{% block page-category %}index{% endblock %}";
+            $("header [data-page=\""+page+"\"]").addClass("active")
+        })
+    </script>
+
+</head>
+<body data-twttr-rendered="true">
+<div class="container">
+<header>
+    <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
+        <div class="navbar-header">
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li data-page="index"><a href="/">Strona główna</a></li>
+                    <li data-page="books"><a href="{% url 'books:Browse' %}">Książki</a></li>
+                    {% if not user.is_anonymous %}
+                    <li data-page="account"><a href="/">Twoje konto</a></li>
+                    <li><a href="/">Status</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="strip" class="well">
+        <h1>BiblioTeKa</h1>
+    </div>
+</header>
+
+
+
+{% block content %}
+{% endblock content %}
+</div>
+</body>
+</html>
