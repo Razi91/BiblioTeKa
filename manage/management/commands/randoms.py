@@ -214,9 +214,9 @@ class Command(BaseCommand):
             t.release = datetime.date(1900+int(random.random()*115), int(1+random.random()*10), int(1+random.random()*25))
             t.title = _titles[int(random.random()*len(_titles))]
             t.save()
-            for i in range(1+int(min(0,random.normalvariate(0,1)))):
+            for i in range(1+int(max(0, random.normalvariate(0, 1)))):
                 t.author.add(authors[int(random.random()*len(authors))])
-            for i in range(1+int(min(0,random.normalvariate(0,1)))):
+            for i in range(1+int(max(0, random.normalvariate(0, 1)))):
                 t.genre.add(genres[int(random.random()*len(genres))])
             titles.append(t)
             t.save()
@@ -229,7 +229,7 @@ class Command(BaseCommand):
             publisher.append(p)
 
         pricing = []
-        for i in range(1,5):
+        for i in range(1, 5):
             p = Pricing()
             p.name = "{0}".format(i)
             p.added = (datetime.datetime.now() - datetime.timedelta(days=random.random()*365*10))
