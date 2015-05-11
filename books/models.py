@@ -54,6 +54,7 @@ class BookTitleManager(models.Manager):
 class BookTitle(models.Model):
     objects = models.Manager()
     data = BookTitleManager()
+
     release = models.DateTimeField()
     title = models.CharField(max_length=256)
     genre = models.ManyToManyField('Genre')

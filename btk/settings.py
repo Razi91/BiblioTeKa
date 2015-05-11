@@ -69,7 +69,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'btk',
 		'USER': 'jkonieczny',
-		#'PASSWORD': 'qN;#o9(f9<',
+		#'PASSWORD': '',
     },
 }
 
