@@ -1,25 +1,18 @@
-#BiblioTeKa
+# Awesome, you've just made a new workspace!
+Workspaces are fantastic for organizing your work. This new workspace, which lives inside the 'Workspaces' folder of your home
+directory, is a place where you can store all relevant and related files to a particular project. For example, if you
+are working on multiple projects, its nice to have them separated as follows:
+-|home dir
+   -|Workspaces
+    -| Project 1
+    -| Project 2
+    -| Project 3
 
-System zarządzania biblioteką
+Workspaces help keep your projects organized. You can create any number of workspaces. There are no limits.
 
-#Wymagania
+Note: A workspace folder is just a regular folder so you can create any number of files and folders inside it.
 
-*Python 3.3
-*Django 1.8
-*PostgreSQL (lub inna baza danych, SQLite odradzany)
+As you move back and forth between your workspaces, Koding will remember everything about each workspace. This includes things
+like IDE settings, files open, Terminals open, etc.
 
-
-#Uruchomienie aplikacji
-
-1. Zaopatrz się w wymagane oprogramowanie (wyżej wymienione)
-2. Uruchom kolejno:
-  2.1 `python3 manage.py syncdb` -- utworzenie schematu bazy danych, tworzy też konto superadmina
-  2.2 `python3 manage.py migrate` -- (nie wiem czy wymagane, nie chce mi się zagłębiać)
-  2.3 `python3 manage.py randoms` -- utworzenie losowej bazy danych
-3. Uruchom serwer:
-`python manage.py runserver 0.0.0.0:8000`
-
-Po tym serwer stoi na twoim lokalnym komputerze na porcie 8000 i jest dostępny dla wszystkich klientów z dostępem do tego portu
-
-Jeżeli używasz innej bazy danych, skopiuj plik btk/settings.py, zmień ustawienia dostępu do bazy danych, a przy każdej
-komendzie dopisuj ` --settings=plik.z.ustawieniami` (pamiętaj że to nazwa paczki, więc kropni, a nie slashe). Nie używaj spacji
+Enjoy and Happy Koding!
