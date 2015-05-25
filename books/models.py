@@ -90,3 +90,4 @@ class BookEntity(models.Model):
     book = models.ForeignKey('BookEdition')
     title = models.ForeignKey('BookTitle')
     quality = models.IntegerField()
+
