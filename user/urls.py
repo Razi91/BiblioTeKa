@@ -9,8 +9,7 @@ from btk.privileges import *
 from user.views import *
 
 urlpatterns = patterns('',
-    url(r'new-client^$',
-        (new_client), name="NewClient"),
+    url(r'^new_client/$', (new_client), name="NewClient"),
     # url(r'^at/([0-9:_\-]+)$',
     #     is_coordinator_or_superuser(views.shift_map), name='AtTime'),
 
