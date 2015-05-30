@@ -10,3 +10,10 @@ def titles(request):
         'books': books
     }
     return render(request, "books/titles.html", dict)
+    
+def title(request, id):
+    books = BookTitle.data.filter(id=int(id)).first()
+    dict = {
+        'book': books
+    }
+    return render(request, "books/titles.html", dict)

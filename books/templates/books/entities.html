@@ -20,7 +20,7 @@
                 {% for genre in book.genre.all %}{{ genre.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
             </td>
             <td>
-                {% if book.free_entities %}
+                {% if book.free_entiies %}
                 <a class="btn btn-primary">Wypożycz</a>
                 {% elif book.free_entities %}
                 <a class="btn btn-primary">Rezerwuj</a>
