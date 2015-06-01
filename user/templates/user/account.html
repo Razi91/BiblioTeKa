@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+
+{% block content %}
+    <h1>Konto</h1>
+    <div class="row">
+
+        <div class="col-sm-12 col-lg-6">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">Subskrypcje</div>
+                <div class="panel-body">
+                    <p>Wykupione subskrypcje:</p>
+                </div>
+
+                <!-- Table -->
+                <table class="table">
+                <thead>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Od</th>
+                    <th>do</th>
+                    <th>Kredytów</th>
+                    <th>Obciążenia</th>
+                </tr>
+                </thead>
+                    {% for s in subscriptions %}
+                        <tr>
+                        <td>{{ s.subscription.name }}</td>
+                        <td>{{ s.begin|date:"Y-m-d" }}</td>
+                        <td>{{ s.end|date:"Y-m-d" }}</td>
+                        <td>{{ s.credits }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

@@ -251,5 +251,6 @@ class Command(BaseCommand):
                     entity = BookEntity()
                     entity.title = title
                     entity.book = edition
+                    entity.uuid = uuid.uuid4()
                     entity.quality = max(10, min(0, random.normalvariate(7, 5)))
                     entity.save()

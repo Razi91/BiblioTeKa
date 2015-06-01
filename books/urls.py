@@ -12,8 +12,10 @@ urlpatterns = patterns('',
     #mapa
     url(r'^$',
         (titles), name="Browse"),
-    url(r'title/(\d+)^$',
-        (title), name="Title"),
+    url(r'title/([0-9]+)$',
+        title, name="Title"),
+    url(r'return/$',
+        return_book, name="Return"),
     # url(r'^at/([0-9:_\-]+)$',
     #     is_coordinator_or_superuser(views.shift_map), name='AtTime'),
 

@@ -34,6 +34,6 @@ admin.site.register(BookEdition, BookEditionAdmin)
 
 
 class BookEntityAdmin(admin.ModelAdmin):
-    list_display = ('book', 'title', 'quality',)
+    list_display = ('book', 'title','uuid', 'quality',)
 
 admin.site.register(BookEntity, BookEntityAdmin)

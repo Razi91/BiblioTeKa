@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+
+{% block content %}
+    <h1>Klienci</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Imię i nazwisko</th>
+            <th>PESEL</th>
+            <th>Kredyty</th>
+            <th>Wykup subskrypcję</th>
+            <th>Wypożyczone</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for c in clients %}
+            <form action="?">
+                <tr>
+                    <td>{{ c.user.first_name }} {{ c.user.last_name }}</td>
+                    <td>{{ c.pesel }}</td>
+                    <td><input type="text" name="credits" value="{{ c.credits }}"></td>
+                    <td>
+                        <select name="subscription">
+                        <option value="-1"></option>
+                        {% for s in subscriptions %}
+                            <option value="{{ s.id }}">{{ s.name }} ({{ s.prize }} → {{ s.credits }})</option>
+                        {% endfor %}
+                        </select>
+                    </td>
+                <td>
+                    {{ c.active_loans.count }}
+                </td>
+                    <td>
+                        <input class="btn btn-md btn-success" type="submit" value="Zapisz">
+                    </td>
+                </tr>
+            </form>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

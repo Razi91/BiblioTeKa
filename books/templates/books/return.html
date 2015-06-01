@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block page-category %}books{% endblock %}
+{% block content %}
+
+    <h1>Zwracanie książki</h1>
+    <p>Wpisz UUIDy egzemplarzy, każdy w nowej linii (nie muszą być całe)</p>
+
+    <form action="?" method="POST" class="form">
+        <div class="form-group">
+            <textarea name="uuids" class="form-control" rows="7">{{ uuids }}</textarea>
+        </div>
+        <div class="form-group">
+            <input class="btn btn-success" value="Zwróć">
+        </div>
+    </form>
+    {% if returned %}
+        <h2>Zwrócono</h2>
+        <table>
+            {% for b in returned %}
+                <tr>
+                    <td>{{ b.book.title.title }}</td>
+                    <td>{{ b.client.user.first_name }} {{ b.client.user.last_name }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+
+{% endblock %}

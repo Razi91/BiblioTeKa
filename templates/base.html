@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+{% load bootstrap %}
 <html>
 <head lang="en">
     <meta charset="UTF-8">
@@ -8,43 +9,94 @@
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/vendor/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/flat-ui.min.css' %}">
     <script src="{% static 'bootstrap/js/flat-ui.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'datetimepicker/css/bootstrap-datepicker.min.css' %}">
+    <script src="{% static 'datetimepicker/js/bootstrap-datepicker.min.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 
     <script>
-        $(function(){
+        $(function () {
             var page = "{% block page-category %}index{% endblock %}";
-            $("header [data-page=\""+page+"\"]").addClass("active")
+            $("header [data-page=\"" + page + "\"]").addClass("active")
         })
     </script>
 
 </head>
 <body data-twttr-rendered="true">
 <div class="container">
-<header>
-    <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
-        <div class="navbar-header">
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav navbar-left">
-                    <li data-page="index"><a href="/">Strona główna</a></li>
-                    <li data-page="books"><a href="{% url 'books:Browse' %}">Książki</a></li>
-                    {% if not user.is_anonymous %}
-                    <li data-page="account"><a href="/">Twoje konto</a></li>
-                    <li><a href="/">Status</a></li>
-                    {% endif %}
-                    <li data-page="books"><a href="{% url 'user:NewClient' %}">Nowy klient</a></li>
-                </ul>
+    <header>
+        <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
+            <div class="navbar-header">
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li data-page="index"><a href="/">Strona główna</a></li>
+                        <li data-page="books"><a href="{% url 'books:Browse' %}">Książki</a></li>
+                        {% if user.is_staff %}
+                            <li data-page="books"><a href="{% url 'user:NewClient' %}">Nowy klient</a></li>
+                            <li data-page="clients"><a href="{% url 'user:List' %}">Klienci</a></li>
+                            <li data-page="return"><a href="{% url 'books:Return' %}">Zwrot</a></li>
+                            <li data-page="admin"><a href="/admin/">Admin</a></li>
+                        {% elif user.client %}
+                            <li data-page="account"><a href="/">Twoje konto</a></li>
+                            <li><a href="/">Status</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
+        </nav>
+        <div id="strip" class="well">
+            <h1>BiblioTeKa</h1>
         </div>
-    </nav>
-    <div id="strip" class="well">
-        <h1>BiblioTeKa</h1>
+    </header>
+
+
+    <div class="row">
+        <div class="col-sm-12 col-md-3">
+            {% if user.is_anonymous %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Zaloguj</div>
+                    <div class="panel-body">
+                        <form class="form" method="post" action="{% url 'user:Login' %}">
+                            <div class="form-group">
+                                <input class="form-control" type="text" placeholder="Login" name="username">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="password" placeholder="Hasło" name="password">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="submit" value="Zaloguj">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+            {% if user.client %}
+                {% include 'client.html' %}
+            {% else %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Konto</div>
+                    <table class="table" style="font-size: smaller;">
+                        <tr>
+                            <td>Zalogowany:</td>
+                            <td>{{ user.first_name }} {{ user.last_name }}</td>
+                        </tr>
+                    </table>
+                    <div class="panel-body">
+                        <a href="{% url 'user:Logout' %}" class="btn btn-primary btn-xs">Wyloguj</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-sm-12 col-md-9">
+            {% block content %}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        Panel content
+                    </div>
+                    <div class="panel-footer">Panel footer</div>
+                </div>
+            {% endblock content %}
+        </div>
     </div>
-</header>
-
-
-
-{% block content %}
-{% endblock content %}
 </div>
 </body>
 </html>

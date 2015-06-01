@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block page-category %}books{% endblock %}
+{% block content %}
+<h1>{{ book.title }}</h1>
+    {% for a in book.author.all %}
+        {{ a.name }}{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Wydawnictwo</th>
+            <th>Rok wydania</th>
+            <th>Dostępnych sztuk</th>
+            <th>Kaucja/tydzień</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for pub in book.publications.all %}
+            <tr>
+                <td>{{ pub.publisher.name }}</td>
+                <td>{{ pub.release|date:"Y" }}</td>
+                <td>{{ pub.free_entities }}/{{ pub.entities.count }}</td>
+                <td>{{ pub.pricing.initial }}/{{ pub.pricing.per_week }}</td>
+                <th>
+                    {% if pub.free_entities > 0 %}
+                        <a href="?action=loan&pub={{ pub.id }}" class="btn btn-success">Wypożycz</a>
+                    {% elif pub.available_entities > 0 %}
+                        <a href="?action=reserve&pub={{ pub.id }}" class="btn btn-info">Rezerwuj</a>
+                    {% else %}
+                        <a class="btn btn-danger disabled">Nie można wypożyczyć</a>
+                    {% endif %}
+                </th>
+            </tr>
+        {% endfor %}
+        {% if book.free_entities == 0 %}
+            <tr>
+                <td>(Dowolna)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th>
+                    <a href="?action=reserve" class="btn btn-info">Rezerwuj</a>
+                </th>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+{% endblock %}

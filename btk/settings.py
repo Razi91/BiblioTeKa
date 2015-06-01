@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'books',
     'user',
     'manage',
+    'bootstrapform',
 )
 
 MIDDLEWARE_CLASSES = (

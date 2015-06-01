@@ -1,17 +1,50 @@
 {% extends 'base.html' %}
+{% load bootstrap %}
 
 {% block content %}
-    <h1>Dodaj klienta</h1>
-<form action="?" method="post">
-    {% csrf_token %}
-    {{ user_form.management_form }}
-    {% for form in user_form %}
-        {% for field in form %}
-            {{ field.label_tag }} {{ field }}
-        {% endfor %}
-    {% endfor %}
-    |{{ user_form }}|
-    {{ client_form }}
-    <input type="submit" value="Submit" />
-</form>
+    {% if forms %}
+
+        <h1>Dodaj klienta</h1>
+        <form action="?" method="post" role="form">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-12 col-lg-6">
+                    {{ forms.user_form|bootstrap }}
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                    {{ forms.client_form|bootstrap }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <button type="submit" class="btn btn-primary">Zapisz</button>
+                </div>
+            </div>
+        </form>
+        <script>
+        $(function(){
+            $("#id_client-birthday").datepicker({
+                format: 'yyyy-mm-dd',
+                startDate: '-100y',
+                startView: 2
+            });
+        })
+        </script>
+    {% else %}
+        <h1>Konto klienta utworzone</h1>
+        <table class="table table-stripped">
+            <tr>
+                <th>Login:</th>
+                <td>{{ data.user.username }}</td>
+            </tr>
+            <tr>
+                <th>Imię i nazwisko:</th>
+                <td>{{ data.user.first_name }} {{ data.user.last_name }}</td>
+            </tr>
+            <tr>
+                <th>Kredytów:</th>
+                <td>{{ data.client.credits }}</td>
+            </tr>
+        </table>
+    {% endif %}
 {% endblock %}

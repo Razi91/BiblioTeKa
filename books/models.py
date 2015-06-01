@@ -1,4 +1,5 @@
 from django.db import models
+import uuid as uuid
 
 __author__ = 'jkonieczny'
 
@@ -68,16 +69,29 @@ class BookEditionManager(models.Manager):
     def get_queryset(self):
         return super(BookEditionManager, self).select_related('title')
 
+class BookEditionManager(models.Manager):
+    def get_queryset(self):
+        return super(BookEditionManager, self).get_queryset()\
+            .extra(select={
+                'free_entities': "SELECT count(*) FROM books_bookentity "
+                                 "WHERE books_bookentity.book_id = books_bookedition.id and books_bookentity.quality > 0"
+                                 "and (SELECT count(*) FROM user_loan where book_id = books_bookentity.id) = 0",
+                'available_entities': "SELECT count(*) FROM books_bookentity "
+                                      "WHERE books_bookentity.book_id = books_bookedition.id and books_bookentity.quality > 0"
+            })
 
 class BookEdition(models.Model):
-    title = models.ForeignKey('BookTitle', null=False)
+    objects = BookEditionManager()
+    title = models.ForeignKey('BookTitle', null=False, related_name='publications')
     publisher = models.ForeignKey('Publisher')
     release = models.DateTimeField()
     isbn = models.CharField(max_length=18)
     pricing = models.ForeignKey('Pricing', null=True, blank=True)
 
+
     def __str__(self):
         return "[{0}] {1}".format(self.publisher.name, self.title.title)
+
 
 
 class BookEntityManager(models.Manager):
@@ -87,7 +101,8 @@ class BookEntityManager(models.Manager):
 
 class BookEntity(models.Model):
     #objects = BookEntityManager()
-    book = models.ForeignKey('BookEdition')
+    book = models.ForeignKey('BookEdition', related_name='entities')
+    uuid = models.CharField(max_length=40)
     title = models.ForeignKey('BookTitle')
     quality = models.IntegerField()
 

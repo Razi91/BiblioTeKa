@@ -23,13 +23,15 @@
                 {% for genre in book.genre.all %}{{ genre.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
             </td>
             <td>
+            {% if user.client %}
                 {% if book.free_entities %}
-                <a class="btn btn-primary">Wypożycz</a>
+                <a class="btn btn-primary" href="{% url 'books:Title' book.id %}">Wypożycz</a>
                 {% elif book.free_entities %}
-                <a class="btn btn-primary">Rezerwuj</a>
+                <a class="btn btn-primary" href="{% url 'books:Title' book.id %}">Rezerwuj</a>
                 {% else %}
                 <a class="btn btn-default disabled">Brak sztuk</a>
                 {% endif %}
+            {% endif %}
             </td>
             </tr>
         {% endfor %}
