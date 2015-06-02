@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Author',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=256)),
                 ('born', models.DateField()),
             ],
@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='BookEdition',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
                 ('release', models.DateTimeField()),
                 ('isbn', models.CharField(max_length=18)),
             ],
@@ -29,15 +29,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='BookEntity',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
                 ('quality', models.IntegerField()),
-                ('book', models.ForeignKey(to='books.BookEdition')),
+                ('book', models.ForeignKey(related_name='entities', to='books.BookEdition')),
             ],
         ),
         migrations.CreateModel(
             name='BookTitle',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
                 ('release', models.DateTimeField()),
                 ('title', models.CharField(max_length=256)),
                 ('author', models.ManyToManyField(to='books.Author')),
@@ -46,25 +46,25 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Genre',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=32)),
             ],
         ),
         migrations.CreateModel(
             name='Pricing',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=32)),
                 ('initial', models.DecimalField(decimal_places=2, max_digits=5)),
                 ('per_week', models.DecimalField(decimal_places=2, max_digits=5)),
                 ('added', models.DateTimeField(auto_now_add=True)),
-                ('closed', models.DateTimeField(null=True, blank=True)),
+                ('closed', models.DateTimeField(blank=True, null=True)),
             ],
         ),
         migrations.CreateModel(
             name='Publisher',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=128)),
             ],
         ),
@@ -81,7 +81,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='bookedition',
             name='pricing',
-            field=models.ForeignKey(null=True, to='books.Pricing', blank=True),
+            field=models.ForeignKey(null=True, blank=True, to='books.Pricing'),
         ),
         migrations.AddField(
             model_name='bookedition',
@@ -91,6 +91,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='bookedition',
             name='title',
-            field=models.ForeignKey(to='books.BookTitle'),
+            field=models.ForeignKey(related_name='publications', to='books.BookTitle'),
         ),
     ]
